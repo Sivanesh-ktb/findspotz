@@ -1,20 +1,20 @@
-name: Deploy to GCP
+name: Auto Deployment to GCP
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main  # Trigger when changes are pushed to the main branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use an Ubuntu runner for GitHub Actions
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up GCP authentication
+      # Step 2: Authenticate to GCP using the Service Account
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v0
         with:
@@ -25,22 +25,7 @@ jobs:
         run: |
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-      # Step 4: Build Angular app (if you have a front-end)
-      - name: Build Angular app
+      # Step 4: Verify GCP Communication (e.g., listing Compute Engine instances)
+      - name: Verify GCP Communication
         run: |
-          cd front-end
-          npm install
-          npm run build --configuration=production
-
-      # Step 5: Deploy the Angular app (e.g., via Google Cloud Storage or Compute Engine)
-      - name: Deploy Angular app
-        run: |
-          gcloud compute scp --recurse ./front-end/dist/ ubuntu@34.56.150.249:/var/www/html/angular-app/
-
-      # Step 6: Deploy Node.js backend (if you have a back-end)
-      - name: Deploy Node.js backend
-        run: |
-          cd back-end
-          npm install
-          gcloud compute scp --recurse ./ ubuntu@34.44.233.113:/var/www/node-backend/
-          gcloud compute ssh ubuntu@34.44.233.113 --command="pm2 restart all || pm2 start /var/www/node-backend/src/index.js --name node-backend"
+          gcloud compute instances list
