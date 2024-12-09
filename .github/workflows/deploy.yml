@@ -29,3 +29,9 @@ jobs:
       - name: Verify GCP Communication
         run: |
           gcloud compute instances list
+
+     # Step 5: Deploy Angular app to private GCP instance (using internal IP)
+      - name: Deploy Angular app to Private Instance
+        run: |
+         echo "This is a test file" > test.txt  # Create a dummy test file
+         gcloud compute scp --recurse test.txt ubuntu@10.128.0.4:/var/www/html/test/
