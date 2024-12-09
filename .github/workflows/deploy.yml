@@ -42,5 +42,5 @@ jobs:
         run: |
           cd back-end
           npm install
-          gcloud compute scp --recurse ./ ubuntu@34.56.150.249:/var/www/node-backend/
-          gcloud compute ssh ubuntu@34.56.150.249 --command="pm2 restart all || pm2 start /var/www/node-backend/src/index.js --name node-backend"
+          gcloud compute scp --recurse ./ ubuntu@34.44.233.113:/var/www/node-backend/
+          gcloud compute ssh ubuntu@34.44.233.113 --command="pm2 restart all || pm2 start /var/www/node-backend/src/index.js --name node-backend"
