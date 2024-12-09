@@ -34,4 +34,4 @@ jobs:
       - name: Deploy Angular app to Private Instance
         run: |
          echo "This is a test file" > test.txt  # Create a dummy test file
-         gcloud compute scp --recurse test.txt ubuntu@spotz:/var/www/html/test/ --zone=us-central1-c
+         gcloud compute scp --recurse test.txt ubuntu@spotz:/var/www/html/angular-app/ --zone=us-central1-c
